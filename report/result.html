@@ -123,9 +123,9 @@ function html_escape(s) {
 <div class='heading'>
 <h1 style="font-family: Microsoft YaHei">测试报告</h1>
 <p class='attribute'><strong>测试人员 : </strong> 今天也要加油鸭_tester</p>
-<p class='attribute'><strong>开始时间 : </strong> 2019-05-10 09:29:01</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:01:53.160777</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 3，通过 2，失败 1，通过率= 66.67%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2019-05-14 09:55:24</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:44.851643</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 5，通过 4，失败 1，通过率= 80.00%</p>
 
 <p class='description'>用例执行情况</p>
 </div>
@@ -133,10 +133,10 @@ function html_escape(s) {
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 66.67% }</a>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 80.00% }</a>
 <a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 1 }</a>
-<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 2 }</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 3 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 4 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 5 }</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -157,12 +157,12 @@ function html_escape(s) {
 </tr>
 
 <tr class='failClass warning'>
-    <td>test_api_jiejian.TestApi</td>
-    <td class="text-center">3</td>
-    <td class="text-center">2</td>
+    <td>test_api_cnjqj.TestApi</td>
+    <td class="text-center">5</td>
+    <td class="text-center">4</td>
     <td class="text-center">1</td>
     <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c1',3)" class="detail" id='c1'>详细</a></td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',5)" class="detail" id='c1'>详细</a></td>
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
@@ -177,7 +177,7 @@ function html_escape(s) {
     <div id='div_pt1_1' class="collapse in">
     <pre>
     
-pt1_1: HKZW-001返回实际结果-&gt;：True
+pt1_1: cnj_st_001返回实际结果-&gt;：True
 
 
     </pre>
@@ -197,7 +197,7 @@ pt1_1: HKZW-001返回实际结果-&gt;：True
     <div id='div_pt1_2' class="collapse in">
     <pre>
     
-pt1_2: HKZW-002返回实际结果-&gt;：True
+pt1_2: cnj_st_002返回实际结果-&gt;：True
 
 
     </pre>
@@ -205,23 +205,67 @@ pt1_2: HKZW-002返回实际结果-&gt;：True
     </td>
 </tr>
 
-<tr id='ft1_3' class='none'>
-    <td class='failCase'><div class='testcase'>test_api_3</div></td>
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_api_3</div></td>
     <td colspan='5' align='center'>
     <!--默认收起错误信息 -Findyou
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
-    <div id='div_ft1_3' class="collapse">  -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
 
     <!-- 默认展开错误信息 -Findyou -->
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
-    <div id='div_ft1_3' class="collapse in">
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in">
     <pre>
     
-ft1_3: HKZW-003返回实际结果-&gt;：False
+pt1_3: cnj_st_003返回实际结果-&gt;：True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_api_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in">
+    <pre>
+    
+pt1_4: cnj_st_004返回实际结果-&gt;：True
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_5' class='none'>
+    <td class='failCase'><div class='testcase'>test_api_5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_5'>失败</button>
+    <div id='div_ft1_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_5'>失败</button>
+    <div id='div_ft1_5' class="collapse in">
+    <pre>
+    
+ft1_5: Message: unknown error: Element &lt;button type="button" class="btn btn-info" autofocus="" data-close=""&gt;...&lt;/button&gt; is not clickable at point (834, 430). Other element would receive the click: &lt;div class="blockUI ui-widget-overlay " style="position: fixed; z-index: 100100"&gt;...&lt;/div&gt;
+  (Session info: chrome=74.0.3729.131)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.17134 x86_64)
+
+cnj_st_005返回实际结果-&gt;：False
 Traceback (most recent call last):
   File "C:\ProgramData\Anaconda3\lib\site-packages\ddt.py", line 145, in wrapper
     return func(self, *args, **kwargs)
-  File "C:\Users\wangwenbo\selenium_auto_test02\run_entrance\test_api_jiejian.py", line 150, in test_api
+  File "C:\Users\wangwenbo\selenium_auto_test02\run_entrance\test_api_cnjqj.py", line 150, in test_api
     self.assertTrue(suite_result)
 AssertionError: False is not true
 
@@ -233,11 +277,11 @@ AssertionError: False is not true
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>3</td>
-    <td>2</td>
+    <td>5</td>
+    <td>4</td>
     <td>1</td>
     <td>0</td>
-    <td>通过率：66.67%</td>
+    <td>通过率：80.00%</td>
 </tr>
 </table>
 

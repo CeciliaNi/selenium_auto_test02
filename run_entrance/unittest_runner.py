@@ -13,7 +13,7 @@ report_path = '../report/'
 case_path = '../run_entrance/'
 
 
-def add_case(casepath=case_path, rule="test_api_cnjqj.py"):
+def add_case(casepath=case_path, rule="test_api_cnj06qj.py"):
     """
     加载所有的测试文件
     :return:
