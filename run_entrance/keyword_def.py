@@ -26,6 +26,17 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
         elif keyword == 'actionchains_click':
             if type == 'xpath':
                 ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
+        elif keyword == 'highlight':  # 元素定位，加红色边框
+            if type == 'xpath':
+                element = driver.find_element_by_xpath(loc)
+                driver.execute_script(
+                    "arguments[0].setAttribute('style', arguments[1]);", element,
+                    "border: 2px solid red;"  # 边框border:2px; red红色
+                )
+        elif keyword == 'document_get':
+            if type == 'className':
+                js = "var q=document.getElementsByClassName" + loc + ".click()"
+                driver.execute_script(js)
         elif keyword == 'assert':  # 断言
             for checktype, checkvalue in checkpoint.items():
                 if type == 'xpath':
