@@ -16,7 +16,6 @@ from run_entrance.write_excel import img_into_excel
 from driver.driver import driver
 import os
 
-url = 'http://10.45.67.194:9180/'
 # 获取该测试文件的全称，通过一系列操作得到最后'_'后的名称 例如'test_api_login.py'--》login
 full_filename = os.path.basename(__file__)
 filename = full_filename[:full_filename.rfind('.')]
@@ -27,6 +26,9 @@ report_file = '../report/report_'+last_name+'.xlsx'
 
 test_step_datas = pd.read_excel(testxlsx, sheet_name='TestSteps', converters={u'操作值': str})
 page_element_datas = pd.read_excel(testxlsx, sheet_name='PageElements')
+config_content = pd.read_excel(testxlsx, sheet_name='TestConfig')
+
+url = config_content['url'].values[0]
 
 
 class ExcelUtil:
