@@ -8,13 +8,14 @@ import unittest
 from report import HTMLTestReportCN
 import os
 import time
+from driver.driver import driver
 
 
 report_path = '../report/'
 case_path = '../run_entrance/'
 
 
-def add_case(casepath=case_path, rule="test_api_cnj01*.py"):
+def add_case(casepath=case_path, rule="test_api_cnj*.py"):
     """
     加载所有的测试文件
     :return:
@@ -47,3 +48,4 @@ def run_case(all_case, reportpath=report_path):
 if __name__ == '__main__':
     cases = add_case()
     run_case(cases)
+    driver.quit()
