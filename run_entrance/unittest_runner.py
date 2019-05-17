@@ -15,7 +15,7 @@ report_path = '../report/'
 case_path = '../run_entrance/'
 
 
-def add_case(casepath=case_path, rule="test_api_jbj*.py"):
+def add_case(casepath=case_path, rule="test_api_*.py"):
     """
     加载所有的测试文件
     :return:
