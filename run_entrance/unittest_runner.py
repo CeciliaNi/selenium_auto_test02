@@ -3,10 +3,13 @@
 功能：运行测试用例 生成html报告
 日期：29/4/2019
 """
+import sys
+import os
+# 当前项目路径加入到环境变量中，让解析器能找到第一model的目录
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "..")))
 
 import unittest
 from report import HTMLTestReportCN
-import os
 import time
 from driver.driver import driver
 
