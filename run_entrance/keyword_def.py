@@ -11,12 +11,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-long = 40
-mid = 15
-l_short = 10
-short = 5
-s_short = 2
-
 
 def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=None):
     """
@@ -45,7 +39,9 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
         elif keyword == 'document_get':
             if type == 'className':
                 js = "var q=document.getElementsByClassName" + loc + ".click()"
-                driver.execute_script(js)
+            elif type == 'id':
+                js = "var q=document.getElementById" + loc + ".click()"
+            driver.execute_script(js)
         elif keyword == 'until_wait':
             WebDriverWait(driver, 40, 0.5).until(
                 EC.presence_of_element_located((By.XPATH, loc))
@@ -80,17 +76,7 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                             return False
 
         if sleep_time:
-            if sleep_time == 'long':
-                time.sleep(long)
-            elif sleep_time == 'mid':
-                time.sleep(mid)
-            elif sleep_time == 'short':
-                time.sleep(short)
-            elif sleep_time == 's_short':
-                time.sleep(s_short)
-            else:
-                time.sleep(sleep_time)
-
+            time.sleep(sleep_time)
         return True
 
     except Exception as e:

@@ -7,13 +7,14 @@
 import unittest
 from report import HTMLTestReportCN
 import os
+import time
 
 
 report_path = '../report/'
 case_path = '../run_entrance/'
 
 
-def add_case(casepath=case_path, rule="test_api_cnj*.py"):
+def add_case(casepath=case_path, rule="test_api_cnj01*.py"):
     """
     加载所有的测试文件
     :return:
@@ -29,7 +30,10 @@ def run_case(all_case, reportpath=report_path):
     执行所有的用例, 并把结果写入测试报告
     :return:
     """
-    htmlreport_path = reportpath + 'result.html'
+    # html报告显示为'result_2019-05-16.html'这样的格式
+    date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+    htmlreport_path = reportpath + 'result_' + date_time + '.html'
+
     # 报告文件的相对路径转绝对路径
     abs_htmlreport_path = os.path.abspath(htmlreport_path)
 
