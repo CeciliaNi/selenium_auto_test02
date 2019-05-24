@@ -10,6 +10,7 @@ import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 
 def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=None):
@@ -26,6 +27,13 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
         elif keyword == 'click':
             if type == 'xpath':
                 driver.find_element_by_xpath(loc).click()
+        elif keyword == 'move_to':
+            if type == 'xpath':
+                ActionChains(driver).move_to_element(driver.find_element_by_xpath(loc)).perform()
+        elif keyword == 'vis_sel':
+            if type == "id":
+                s = driver.find_element_by_id(loc)
+                Select(s).select_by_visible_text(value)
         elif keyword == 'actionchains_click':
             if type == 'xpath':
                 ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
@@ -42,6 +50,13 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
             elif type == 'id':
                 js = "var q=document.getElementById" + loc + ".click()"
             driver.execute_script(js)
+        elif keyword == 'doc_get_len':
+            if type == 'className':
+                js_len = "return document.getElementsByClassName" + loc + ".length"
+                len = driver.execute_script(js_len)
+                js_exc = "document.getElementsByClassName" + loc + "["+str(len-1)+"].click()"
+                driver.execute_script(js_exc)
+
         elif keyword == 'until_wait':
             WebDriverWait(driver, 40, 0.5).until(
                 EC.presence_of_element_located((By.XPATH, loc))
