@@ -21,7 +21,7 @@ full_filename = os.path.basename(__file__)
 filename = full_filename[:full_filename.rfind('.')]
 last_name = filename.split('_')[-1]
 
-testxlsx = '../test_suite_' + last_name + '.xlsx'
+testxlsx = '../run_entrance/test_suite/test_suite_' + last_name + '.xlsx'
 report_file = '../report/report_'+last_name+'.xlsx'
 
 test_step_datas = pd.read_excel(testxlsx, sheet_name='TestSteps', converters={u'操作值': str})
@@ -57,7 +57,6 @@ class ExcelUtil:
                 if row_num > 0:
                     s['rownum'] = row_num + 1
                     s['测试用例序号'] = each_row[0].value
-                    s['测试用例描述'] = each_row[1].value
                     r.append(s)
             return r
 

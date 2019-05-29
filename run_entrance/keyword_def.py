@@ -53,8 +53,8 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
         elif keyword == 'doc_get_len':
             if type == 'className':
                 js_len = "return document.getElementsByClassName" + loc + ".length"
-                len = driver.execute_script(js_len)
-                js_exc = "document.getElementsByClassName" + loc + "["+str(len-1)+"].click()"
+                len_num = driver.execute_script(js_len)
+                js_exc = "document.getElementsByClassName" + loc + "["+str(len_num-1)+"].click()"
                 driver.execute_script(js_exc)
 
         elif keyword == 'until_wait':
@@ -70,7 +70,7 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                 EC.presence_of_element_located((By.XPATH, loc))
             ).click()
         elif keyword == 'until_wait_actclick':
-            WebDriverWait(driver, 40, 0.5).until(
+            WebDriverWait(driver, 40, 1).until(
                 EC.presence_of_element_located((By.XPATH, loc))
             )
             ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
@@ -89,7 +89,13 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                             return True
                         else:
                             return False
-
+        elif keyword == 'switch_to':
+            # 新网页为句柄1 移动到打开的网页
+            latest_window = driver.window_handles[-1]
+            driver.close()  # 关闭窗口，保证浏览器只有一个窗口
+            driver.switch_to.window(latest_window)
+            # windows = driver.window_handles
+            # driver.switch_to.window(windows[-1])
         if sleep_time:
             time.sleep(sleep_time)
         return True
