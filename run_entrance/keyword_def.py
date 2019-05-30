@@ -98,6 +98,8 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
             # driver.switch_to.window(windows[-1])
         if sleep_time:
             time.sleep(sleep_time)
+        else:
+            time.sleep(1)
         return True
 
     except Exception as e:
