@@ -11,6 +11,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
 
 
 def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=None):
@@ -29,14 +30,21 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                 driver.find_element_by_xpath(loc).click()
         elif keyword == 'move_to':
             if type == 'xpath':
-                ActionChains(driver).move_to_element(driver.find_element_by_xpath(loc)).perform()
+                ele = driver.find_element_by_xpath(loc)
+                ActionChains(driver).move_to_element(ele).move_by_offset(5, 5).click().perform()
         elif keyword == 'vis_sel':
             if type == "id":
                 s = driver.find_element_by_id(loc)
                 Select(s).select_by_visible_text(value)
+            elif type == 'xpath':
+                s = driver.find_element_by_xpath(loc)
+                Select(s).select_by_visible_text(value)
         elif keyword == 'actionchains_click':
             if type == 'xpath':
                 ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
+        elif keyword == 'actionchains_context_click':
+            if type == 'xpath':
+                ActionChains(driver).context_click(driver.find_element_by_xpath(loc)).perform()
         elif keyword == 'highlight':  # 元素定位，加红色边框
             if type == 'xpath':
                 element = driver.find_element_by_xpath(loc)
