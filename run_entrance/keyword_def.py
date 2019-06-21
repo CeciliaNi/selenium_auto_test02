@@ -3,10 +3,10 @@
 功能：根据关键字来定义页面操作的函数
 日期：19/4/2019
 """
-
 from driver.driver import driver
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import os
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -31,7 +31,7 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
         elif keyword == 'move_to':
             if type == 'xpath':
                 ele = driver.find_element_by_xpath(loc)
-                ActionChains(driver).move_to_element(ele).move_by_offset(5, 5).click().perform()
+                ActionChains(driver).move_to_element(ele).perform()
         elif keyword == 'vis_sel':
             if type == "id":
                 s = driver.find_element_by_id(loc)
@@ -41,7 +41,7 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                 Select(s).select_by_visible_text(value)
         elif keyword == 'actionchains_click':
             if type == 'xpath':
-                ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
+                 ActionChains(driver).click(driver.find_element_by_xpath(loc)).perform()
         elif keyword == 'actionchains_context_click':
             if type == 'xpath':
                 ActionChains(driver).context_click(driver.find_element_by_xpath(loc)).perform()
@@ -97,6 +97,28 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
                             return True
                         else:
                             return False
+                else:
+                     if checktype == 'file':
+                        file_path = './down_file/'+checkvalue
+                        time.sleep(3)
+                        is_exists = os.path.exists(file_path)
+                        if is_exists:
+                            os.remove(file_path)
+                            return True
+                        else:
+                            return False
+        elif keyword == 'upload_file':
+            # 上传文件
+            file_name = value
+            file_path = r'..\data\\' + file_name
+            # 将上传文件的相对路径转换成绝对路径
+            file_path = os.path.abspath(file_path)
+            os.system("..\\data\\upload.exe %s" % file_path)  # 你自己本地的.exe路径
+            time.sleep(3)
+        elif keyword == 'minimize_window':
+            driver.minimize_window()
+        elif keyword == 'maximize_window':
+            driver.maximize_window()
         elif keyword == 'switch_to':
             # 新网页为句柄1 移动到打开的网页
             latest_window = driver.window_handles[-1]
@@ -104,6 +126,11 @@ def key_word_func(keyword, type, loc, checkpoint=None, value=None, sleep_time=No
             driver.switch_to.window(latest_window)
             # windows = driver.window_handles
             # driver.switch_to.window(windows[-1])
+        elif keyword == 'switch_iframe':
+            if type == 'id':
+                driver.switch_to.frame(driver.find_element_by_id(loc))
+        elif keyword == 'switch_iframe_out':
+            driver.switch_to_default_content()
         if sleep_time:
             time.sleep(sleep_time)
         else:
