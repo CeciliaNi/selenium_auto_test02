@@ -21,10 +21,10 @@ case_path = '../run_entrance/'
 suite_path = '../run_entrance/test_suite/'
 
 # 扫描测试文档的设定
-rule_excl = 'cnj01'
+rule_excl = '*'
 if rule_excl == '*':
     rule_config = "test_api_*.py"
-    excel_file = '*'
+    excel_file = 'test_suite_*'
 else:
     rule_config = "test_api_"+rule_excl+"*.py"
     excel_file = 'test_suite_'+rule_excl+'*.xlsx'
@@ -40,7 +40,7 @@ for each_file in file_list:
     sub_name = file_name.split("_")[-1]  # cnj01接件
     py_file = 'test_api_'+sub_name+'.py'
     # 复制出test_api的py文件
-    copyfile('test_api_template.py', py_file)
+    copyfile('test_template.py', py_file)
     py_file_list.append(py_file)
 
 
