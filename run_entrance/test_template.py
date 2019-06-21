@@ -113,7 +113,8 @@ def process_suite(suite_no):
             # 一个测试步骤运行结束后 将TestSteps页中的'测试结果'列填充完整
             write_into_excel(report_file, 'TestSteps', row_num + 2, 7, '用例步骤执行失败')
             # 测试步骤失败时 截图保存并将照片插入单元格中
-            pic_path = save_img()
+            test_suite_name = last_name
+            pic_path = save_img(test_suite_name)
             # 当测试步骤返回不成功时，不再执行剩下的步骤，直接执行下个测试用例
             break
 
