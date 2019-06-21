@@ -10,7 +10,7 @@ from driver.driver import driver
 base_path = '../picture/results/'
 
 
-def save_img():
+def save_img(test_suite_name):
     """
     截图保存
     """
@@ -22,7 +22,7 @@ def save_img():
     is_exists = os.path.exists(path)
     if not is_exists:
         os.makedirs(path)
-    pic_path = path + '/' + hour_time + '.png'
+    pic_path = path + '/' + test_suite_name + '_' + hour_time + '.png'
     # 这里注意save_screenshot()填入的路径必须是已有的文件夹路径，所以之前要进行路径判断后没有新建
     # driver.save_screenshot(pic_path)
     driver.get_screenshot_as_file(pic_path)
