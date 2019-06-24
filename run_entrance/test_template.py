@@ -15,14 +15,18 @@ from picture.save_img import save_img
 from run_entrance.write_excel import img_into_excel
 from driver.driver import driver
 import os
+import time
 
 # 获取该测试文件的全称，通过一系列操作得到最后'_'后的名称 例如'test_api_login.py'--》login
 full_filename = os.path.basename(__file__)
 filename = full_filename[:full_filename.rfind('.')]
 last_name = filename.split('_')[-1]
 
+
+date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 testxlsx = '../run_entrance/test_suite/test_suite_' + last_name + '.xlsx'
-report_file = '../report/report_'+last_name+'.xlsx'
+report_date_path = '../report/'+date_time+'/'
+report_file = report_date_path +'report_'+last_name+'.xlsx'
 
 test_step_datas = pd.read_excel(testxlsx, sheet_name='TestSteps', converters={u'操作值': str})
 page_element_datas = pd.read_excel(testxlsx, sheet_name='PageElements')
@@ -141,7 +145,12 @@ class TestApi(unittest.TestCase):  # 继承unittest.TestCase
     def setUpClass(cls):
         # 为了不污染测试的数据，出报告的时候先将test_suite_.xlsx复制到report目录下的report.xlsx
 
+        # 判断报告文件路径是否存在
+        is_exists = os.path.exists(report_date_path)
+        if not is_exists:
+            os.makedirs(report_date_path)
         copyfile(testxlsx, report_file)
+
         driver.delete_all_cookies()
         driver.get(url)
 
