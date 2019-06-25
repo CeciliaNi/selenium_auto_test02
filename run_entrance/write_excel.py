@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
 import os
 import matplotlib.pyplot as plt
+from openpyxl.styles import Alignment
 
 
 # filename = r'c:\Users\wangwenbo\selenium_auto_test01\test_suite.xls'
@@ -15,26 +16,28 @@ import matplotlib.pyplot as plt
 # wb.Close()
 # excel.Application.Quit()
 
+align = Alignment(horizontal='distributed', vertical='center', wrap_text=True)
 
-def write_into_excel(filename, sheet_name, row, column, value):
+
+def write_into_excel(resultwb, filename, sheet_name, row, column, value):
     """
     往excel表格中写入测试结果数据
     :return:
     """
-    resultwb = load_workbook(filename)
+    # resultwb = load_workbook(filename)
 
     ws = resultwb[sheet_name]
-    ws.cell(row=row, column=column, value=value)
+    ws.cell(row=row, column=column, value=value).alignment = align
     resultwb.save(filename)
 
 
-def img_into_excel(filename, sheet_name, row, column, img_path):
+def img_into_excel(resultwb, sheet_name, row, column, img_path):
     """
     往excel中插入图片
     :return:
     """
 
-    resultwb = load_workbook(filename)
+    # resultwb = load_workbook(filename)
     ws = resultwb[sheet_name]
 
     # 设置文字图片单元格的行高列宽
@@ -56,7 +59,7 @@ def img_into_excel(filename, sheet_name, row, column, img_path):
         ws.add_image(img, target_cell)
 
         # 保存
-        resultwb.save(filename)
+        # resultwb.save(filename)
 
 
 def pie_report(filename):

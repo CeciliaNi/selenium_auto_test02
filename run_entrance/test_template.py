@@ -33,6 +33,12 @@ page_element_datas = pd.read_excel(testxlsx, sheet_name='PageElements')
 config_content = pd.read_excel(testxlsx, sheet_name='TestConfig')
 
 url = config_content['url'].values[0]
+# 判断报告文件路径是否存在
+is_exists = os.path.exists(report_date_path)
+if not is_exists:
+    os.makedirs(report_date_path)
+copyfile(testxlsx, report_file)
+resultwb = load_workbook(report_file)
 
 
 class ExcelUtil:
@@ -112,10 +118,11 @@ def process_suite(suite_no):
 
         if is_step_succ:
             # 一个测试步骤运行结束后 将TestSteps页中的'测试结果'列填充完整
-            write_into_excel(report_file, 'TestSteps', row_num + 2, 7, '用例步骤执行成功')
+            write_into_excel(resultwb, report_file, 'TestSteps', row_num + 2, 7, '用例步骤执行成功')
         else:
             # 一个测试步骤运行结束后 将TestSteps页中的'测试结果'列填充完整
-            write_into_excel(report_file, 'TestSteps', row_num + 2, 7, '用例步骤执行失败')
+            wrong_info = '用例步骤执行失败，' + each_step + '执行失败。'
+            write_into_excel(resultwb, report_file, 'TestSteps', row_num + 2, 7, wrong_info)
             # 测试步骤失败时 截图保存并将照片插入单元格中
             test_suite_name = last_name
             pic_path = save_img(test_suite_name)
@@ -124,12 +131,12 @@ def process_suite(suite_no):
 
     # 一个用例运行结束后 将TestSuite页中的'是否执行','执行结果'列填充完整
     if is_step_succ:
-        write_into_excel(report_file, 'TestSuite', rownum, 6, 'yes')
-        write_into_excel(report_file, 'TestSuite', rownum, 7, 'success')
+        write_into_excel(resultwb, report_file, 'TestSuite', rownum, 6, 'yes')
+        write_into_excel(resultwb, report_file, 'TestSuite', rownum, 7, 'success')
     else:
-        write_into_excel(report_file, 'TestSuite', rownum, 6, 'yes')
-        write_into_excel(report_file, 'TestSuite', rownum, 7, 'fail')
-        img_into_excel(report_file, 'TestSteps', row_num + 2, 'H', pic_path)
+        write_into_excel(resultwb, report_file, 'TestSuite', rownum, 6, 'yes')
+        write_into_excel(resultwb, report_file, 'TestSuite', rownum, 7, 'fail')
+        img_into_excel(resultwb, 'TestSteps', row_num + 2, 'H', pic_path)
 
     return is_step_succ
 
@@ -146,13 +153,18 @@ class TestApi(unittest.TestCase):  # 继承unittest.TestCase
         # 为了不污染测试的数据，出报告的时候先将test_suite_.xlsx复制到report目录下的report.xlsx
 
         # 判断报告文件路径是否存在
-        is_exists = os.path.exists(report_date_path)
-        if not is_exists:
-            os.makedirs(report_date_path)
-        copyfile(testxlsx, report_file)
+        # is_exists = os.path.exists(report_date_path)
+        # if not is_exists:
+        #     os.makedirs(report_date_path)
+        # copyfile(testxlsx, report_file)
 
         driver.delete_all_cookies()
         driver.get(url)
+
+    # 必须使用 @ classmethod装饰器, 所有test运行完后运行一次
+    @classmethod
+    def tearDownClass(cls):
+        resultwb.save(report_file)
 
     @ddt.data(*testdata)
     def test_api(self, data):
@@ -164,3 +176,6 @@ class TestApi(unittest.TestCase):  # 继承unittest.TestCase
 
 if __name__ == "__main__":
     unittest.main()
+
+    # 保存
+    # resultwb.save(report_file)
