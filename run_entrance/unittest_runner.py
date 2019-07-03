@@ -74,6 +74,30 @@ def run_case(all_case, reportpath=report_path):
     fp.close()
 
 
+def report_file_del():
+    date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+    pic_path = '../picture/results/' + date_time + '/*.png'
+    # 扫描出当天图片截图列表
+    pic_list = glob.glob(pic_path)
+    suite_set = set()  # 创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典。
+    for pic_file in pic_list:
+        pic_full_name = pic_file.split("\\")[-1]
+        pic_name = pic_full_name[:pic_full_name.rfind(".")]
+        pic_suite_name = pic_name.split("_")[0]
+        suite_set.add(pic_suite_name)
+
+    # 扫描出当天报告列表
+    report_path = '../report/' + date_time + '/*.xlsx'
+    rpt_list = glob.glob(report_path)
+    for rpt_file in rpt_list:
+        rpt_full_name = rpt_file.split("\\")[-1]
+        rpt_name = rpt_full_name[:rpt_full_name.rfind(".")]
+        rpt_suite_name = rpt_name.split("_")[-1]
+        # 如果报告文件不在截图文件列表中，则表明该模块没有报错，删除该报告文件
+        if not rpt_suite_name in suite_set:
+            os.remove(rpt_file)
+
+
 if __name__ == '__main__':
     cases = add_case()
     run_case(cases)
@@ -81,3 +105,5 @@ if __name__ == '__main__':
     # 删除py文件
     for each_file in py_file_list:
         os.remove(each_file)
+    # 对报告文件进行整合，如果没有报错就删除，只保留有报错模块的报告文件
+    report_file_del()
