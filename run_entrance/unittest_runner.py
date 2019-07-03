@@ -14,11 +14,30 @@ import time
 from driver.driver import driver
 import glob
 from shutil import copyfile
+import shutil
 
 
-report_path = '../report/'
+date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+report_scan_path = '../report/'
 case_path = '../run_entrance/'
 suite_path = '../run_entrance/test_suite/'
+pic_base_path = '../picture/results/' + date_time
+report_base_path = '../report/' + date_time
+
+# 判断截图路径是否存在
+is_pic_exists = os.path.exists(pic_base_path)
+if is_pic_exists:
+    # 先强制删除文件夹，再重新建同名文件夹即可
+    shutil.rmtree(pic_base_path)
+    os.makedirs(pic_base_path)
+
+# 判断报告文件路径是否存在
+is_rpt_exists = os.path.exists(report_base_path)
+if is_rpt_exists:
+    # 先强制删除文件夹，再重新建同名文件夹即可
+    shutil.rmtree(report_base_path)
+    os.makedirs(report_base_path)
+
 
 # 扫描测试文档的设定
 rule_excl = '*'
@@ -55,7 +74,7 @@ def add_case(casepath=case_path, rule=rule_config):
     return discover
 
 
-def run_case(all_case, reportpath=report_path):
+def run_case(all_case, reportpath=report_scan_path):
     """
     执行所有的用例, 并把结果写入测试报告
     :return:
@@ -75,8 +94,8 @@ def run_case(all_case, reportpath=report_path):
 
 
 def report_file_del():
-    date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
-    pic_path = '../picture/results/' + date_time + '/*.png'
+    # date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+    pic_path = pic_base_path + '/*.png'
     # 扫描出当天图片截图列表
     pic_list = glob.glob(pic_path)
     suite_set = set()  # 创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典。
@@ -87,7 +106,7 @@ def report_file_del():
         suite_set.add(pic_suite_name)
 
     # 扫描出当天报告列表
-    report_path = '../report/' + date_time + '/*.xlsx'
+    report_path = report_base_path + '/*.xlsx'
     rpt_list = glob.glob(report_path)
     for rpt_file in rpt_list:
         rpt_full_name = rpt_file.split("\\")[-1]
