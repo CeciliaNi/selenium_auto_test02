@@ -25,7 +25,7 @@ last_name = filename.split('_')[-1]
 
 date_time = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 testxlsx = '../run_entrance/test_suite/test_suite_' + last_name + '.xlsx'
-report_date_path = '../report/'+date_time+'/'
+report_date_path = '../report/report_excel/'+date_time+'/'
 report_file = report_date_path +'report_'+last_name+'.xlsx'
 
 test_step_datas = pd.read_excel(testxlsx, sheet_name='TestSteps', converters={u'操作值': str})

@@ -11,6 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "..")))
 import unittest
 from report import HTMLTestReportCN
 import time
+import datetime
 from driver.driver import driver
 import glob
 from shutil import copyfile
@@ -22,7 +23,7 @@ report_scan_path = '../report/'
 case_path = '../run_entrance/'
 suite_path = '../run_entrance/test_suite/'
 pic_base_path = '../picture/results/' + date_time
-report_base_path = '../report/' + date_time
+report_base_path = '../report/report_excel/' + date_time
 
 # 判断截图路径是否存在
 is_pic_exists = os.path.exists(pic_base_path)
@@ -40,7 +41,7 @@ if is_rpt_exists:
 
 
 # 扫描测试文档的设定
-rule_excl = '*'
+rule_excl = 'sxcs01'
 if rule_excl == '*':
     rule_config = "test_api_*.py"
     excel_file = 'test_suite_*'
@@ -117,6 +118,58 @@ def report_file_del():
             os.remove(rpt_file)
 
 
+def save_five_day_file():
+    # 由今天的日期推算出5天前的日期
+    today_date =datetime.datetime.now().date()
+    five_days_ago = today_date + datetime.timedelta(days=-4)
+
+    # 获取results目录下的所有文件夹名称列表
+    results_path = r'../picture/results'
+    pic_folder_str_list = os.listdir(results_path)
+    # 删除5天前的截图文件夹
+    for pic_folder_str in pic_folder_str_list:
+        folder_name_list = pic_folder_str.split('-')
+        year = int(folder_name_list[0])
+        month = int(folder_name_list[1])
+        day = int(folder_name_list[2])
+        folder_date = datetime.date(year, month, day)
+        # 进行判断 如果是5天前的则删除
+        if folder_date < five_days_ago:
+            folder_path = '../picture/results/' + pic_folder_str
+            shutil.rmtree(folder_path)
+
+    # 获取report目录下的所有文件夹名称列表
+    rpt_path = r'../report/report_excel'
+    rpt_folder_str_list = os.listdir(rpt_path)
+    # 删除5天前的excel报告文件夹
+    for rpt_folder_str in rpt_folder_str_list:
+        folder_name_list = rpt_folder_str.split('-')
+        year = int(folder_name_list[0])
+        month = int(folder_name_list[1])
+        day = int(folder_name_list[2])
+        folder_date = datetime.date(year, month, day)
+        # 进行判断 如果是5天前的则删除
+        if folder_date < five_days_ago:
+            folder_path = '../report/report_excel/' + rpt_folder_str
+            shutil.rmtree(folder_path)
+
+    # 扫描出所有html报告文件
+    html_rpt_path = report_scan_path + '\*.html'
+    html_rpt_list = glob.glob(html_rpt_path)
+    for html_rpt in html_rpt_list:
+        html_full_name = html_rpt.split("\\")[-1]
+        html_name = html_full_name[:html_full_name.rfind(".")]
+        html_name_list = html_name.split("_")
+        year = int(html_name_list[1].split('-')[0])
+        month = int(html_name_list[1].split('-')[1])
+        day = int(html_name_list[1].split('-')[2])
+        html_date = datetime.date(year, month, day)
+        # 如果该html文件是5天前的则删除
+        if html_date < five_days_ago:
+            html_file_path = '../report/' + html_rpt
+            os.remove(html_file_path)
+
+
 if __name__ == '__main__':
     cases = add_case()
     run_case(cases)
@@ -126,3 +179,6 @@ if __name__ == '__main__':
         os.remove(each_file)
     # 对报告文件进行整合，如果没有报错就删除，只保留有报错模块的报告文件
     report_file_del()
+
+    # 对报告文件及截图文件夹只保留近5天的数据
+    save_five_day_file()
