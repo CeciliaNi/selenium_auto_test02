@@ -41,7 +41,7 @@ if is_rpt_exists:
 
 
 # 扫描测试文档的设定
-rule_excl = 'sxcs01'
+rule_excl = '*'
 if rule_excl == '*':
     rule_config = "test_api_*.py"
     excel_file = 'test_suite_*'
